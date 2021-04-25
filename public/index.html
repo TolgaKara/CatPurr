@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Serverless Functions — Learn With Jason</title>
+
+		<style>
+			*,
+			*::after,
+			*::before {
+				box-sizing: border-box;
+				font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+					sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+				line-height: 1.45;
+				margin: 0;
+				padding: 0;
+			}
+
+			html {
+				font-size: 20px;
+			}
+
+			body {
+				background: #fffdff;
+				color: #555055;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				min-height: 100vh;
+				padding: 4rem 5vw;
+				text-align: center;
+			}
+
+			h1 {
+				color: #333033;
+				line-height: 1.1;
+				margin-bottom: 0.5rem;
+			}
+
+			.cats {
+				background: #f4f4ff;
+				border: 1px solid #e8e8ff;
+				border-radius: 0.25rem;
+				column-gap: 2rem;
+				display: grid;
+				grid-template-columns: repeat(auto-fit, min(90vw, 10rem));
+				justify-content: center;
+				margin: 1.5rem auto 0;
+				min-height: 30rem;
+				padding: 2rem;
+				row-gap: 4rem;
+				width: min(calc(2px + 38rem), 90vw);
+			}
+
+			.cat {
+				display: flex;
+				flex-direction: column;
+				font-size: 0.875rem;
+			}
+
+			.cat img {
+				width: 100%;
+			}
+
+			.cat figcaption {
+				font-size: 0.625rem;
+				font-style: italic;
+			}
+
+			.cat h2 {
+				color: #333033;
+				font-size: 1rem;
+				margin-top: 0.5rem;
+			}
+
+			.cat p {
+				font-size: 0.625rem;
+				margin-bottom: auto;
+			}
+
+			.cat button {
+				background: #fcf;
+				border: 1px solid #ebe;
+				border-radius: 0.125rem;
+				display: block;
+				font-size: 0.75rem;
+				font-weight: 600;
+				margin-top: 1rem;
+				padding: 0.25rem;
+				text-transform: uppercase;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Boop These Cats</h1>
+		<p>Please. They’re desperate.</p>
+
+		<div class="cats"></div>
+
+		<script type="module">
+			/* use Preact so we don’t need to set up bundlers */
+			import { h, render } from 'https://unpkg.com/preact@latest?module';
+			import { useState } from 'https://unpkg.com/preact@latest/hooks/dist/hooks.module.js?module';
+			import htm from 'https://unpkg.com/htm?module';
+
+			const html = htm.bind(h);
+
+			function Cat({ cat }) {
+
+			};
+
+			  return html`
+			    <div class="cat">
+			      <figure>
+			        <img src="${cat.url}" alt="${cat.alt}" />
+			        <figcaption>Photo by ${cat.credit}</figcaption>
+			      </figure>
+			      <h2>${cat.name}</h2>
+			      <p>
+			        currently playing: <br />
+			        ${cat.favoriteSong}
+			      </p>
+			      <button onClick=${handleBoop} data-id="${cat.id}">
+			        Booped ${boops} Times
+			      </button>
+			    </div>
+			  `;
+			}
+
+			function loadcats() {
+			  // TODO load cats dynamically using serverless functions
+			  const cats = [
+			    {
+			      id: 'Zwvxj3ytTHc',
+			      name: 'Dögg Barkardóttir',
+			      favoriteSong: 'Bjärk — Play Dead',
+			      alt: 'an and white cat wearing eyeglasses',
+			      credit: 'Brianna Santellan',
+			      url:
+			        'https://images.unsplash.com/photo-1492370284958-c20b15c692d2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80',
+			      boops: 9,
+			    },
+			    {
+			      id: 'yxmNWxi3wCo',
+			      name: 'Miz Barkie',
+			      favoriteSong: 'cat B — WAP (Wiggly-Ass kitten)',
+			      alt: 'short-coated white and brown cat on white floor tiles',
+			      credit: 'Florencia Potter',
+			      url:
+			        'https://images.unsplash.com/photo-1513245543132-31f507417b26?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80',
+			      boops: 34,
+			    },
+			    {
+			      id: 'KQN500iE8KA',
+			      name: 'Walden',
+			      favoriteSong:
+			        'Death Cab For cat — I Will Follow You Into The Park',
+			      alt: 'Pembroke Welsh cat walking on snowy field',
+			      credit: 'Peter Pryharski',
+			      url:
+			        'https://images.unsplash.com/photo-1536590158209-e9d615d525e4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+			      boops: 5,
+			    },
+			    {
+			      id: 'J5feaur-y6I',
+			      name: 'Atticus',
+			      favoriteSong: 'Furrell Williams — Yappy',
+			      alt: 'white and brown cat kitten',
+			      credit: 'Hanson Lu',
+			      url:
+			        'https://images.unsplash.com/photo-1543852786-1cf6624b9987?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+			      boops: 7,
+			    },
+			    {
+			      id: 'uc3JhSWITMo',
+			      name: 'Millie',
+			      favoriteSong: 'Anderson .Pawk — Come Down',
+			      alt:
+			        'black white and brown short coated cat sitting on brown wooden floor',
+			      credit: 'Brandon Cormier',
+			      url:
+			        'https://images.unsplash.com/photo-1548247416-ec66f4900b2e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=663&q=80',
+			      boops: 6,
+			    },
+			    {
+			      id: 'cX-KEISwDIw',
+			      name: 'Admiral Ackbark',
+			      favoriteSong:
+			        'Splootie & The Blowfish — Only Wanna Steal Your Food',
+			      alt: 'brown and white cat sitting under white hut',
+			      credit: 'Cole Keister',
+			      url:
+			        'https://images.unsplash.com/photo-1561948955-570b270e7c36?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=518&q=80',
+			      boops: 3,
+			    },
+			  ];
+
+			  render(
+			    html` ${cats.map((cat) => html` <${cat} cat=${cat} /> `)}`,
+			    document.querySelector('.cats'),
+			  );
+			}
+
+			loadcats();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,15 @@
+{
+	"name": "catpurr",
+	"version": "0.0.1",
+	"main": "index.js",
+	"author": "Tolga Kara",
+	"license": "MIT",
+	"scripts": {
+		"dev": "serve public"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"http-server": "^0.12.3",
+		"serve": "^11.3.2"
+	}
+}
