@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Serverless Functions — Learn With Jason</title>
+		<title>Cat Purr</title>
 
 		<style>
 			*,
@@ -107,28 +107,33 @@
 			const html = htm.bind(h);
 
 			function Cat({ cat }) {
-				return html`
-					<div class="cat">
-						<figure>
-							<img src="${cat.url}" alt="${cat.alt}" />
-							<figcaption>Photo by ${cat.credit}</figcaption>
-						</figure>
-						<h2>${cat.name}</h2>
-						<p>
-							currently playing: <br />
-							${cat.favoriteSong}
-						</p>
-						<button onClick=${handleBoop} data-id="${cat.id}">Booped ${boops} Times</button>
-					</div>
-				`;
+				// const [boops, setBoops] = useState(cat.boops);
+				//const [booping, setBooping] = useState(false);
+
+				return (
+					cat.image &&
+					cat.image.url &&
+					html`
+						<div class="cat">
+							<figure>
+								<img src="${cat.image.url}" alt="${cat.name}" />
+								<figcaption>Photo by ${cat.credit}</figcaption>
+							</figure>
+							<h2>${cat.name}</h2>
+							<p>Cat temperament: <br />${cat.temperament}</p>
+							<button data-id="${cat.id}">Booped Times</button>
+						</div>
+					`
+				);
 			}
 
 			async function loadCats() {
 				// TODO load cats dynamically using serverless functions
 				const cats = await fetch("/.netlify/functions/load-cats").then((res) => res.json());
+				console.log(cats);
 
 				render(
-					html` ${cats.map((cat) => html` <${cat} cat=${cat} /> `)}`,
+					html` ${cats.map((cat) => html` <${Cat} cat=${cat} /> `)}`,
 					document.querySelector(".cats")
 				);
 			}
