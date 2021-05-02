@@ -107,8 +107,26 @@
 			const html = htm.bind(h);
 
 			function Cat({ cat }) {
-				// const [boops, setBoops] = useState(cat.boops);
-				//const [booping, setBooping] = useState(false);
+				const [boops, setBoops] = useState(cat.boops);
+				const [booping, setBooping] = useState(false);
+
+				const handleBoop = (event) => {
+					event.preventDefault();
+
+					setBooping(true);
+
+					fetch("/.netlify/functions/add-boop", {
+						method: "POST",
+						body: JSON.stringify({ id: cat.id }),
+					})
+						.then((res) => res.json())
+						.then((data) => {
+							setBoops(data.updated.count);
+							setBooping(false);
+						});
+				};
+
+				const buttonText = booping ? "slowly fellow, booping..." : `Booped ${boops} Times`;
 
 				return (
 					cat.image &&
@@ -119,7 +137,9 @@
 
 							<h2>${cat.name}</h2>
 							<p>Cat temperament: <br />${cat.temperament}</p>
-							<button data-id="${cat.id}">Booped Times</button>
+							<button onClick=${handleBoop} data-id="${cat.id}" disabled=${booping}>
+								${buttonText}
+							</button>
 						</div>
 					`
 				);
