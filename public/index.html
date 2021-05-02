@@ -115,10 +115,8 @@
 					cat.image.url &&
 					html`
 						<div class="cat">
-							<figure>
-								<img src="${cat.image.url}" alt="${cat.name}" />
-								<figcaption>Photo by ${cat.credit}</figcaption>
-							</figure>
+							<img src="${cat.image.url}" alt="${cat.name}" />
+
 							<h2>${cat.name}</h2>
 							<p>Cat temperament: <br />${cat.temperament}</p>
 							<button data-id="${cat.id}">Booped Times</button>
