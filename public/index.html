@@ -39,33 +39,29 @@
 			}
 
 			.cats {
-				background: #f4f4ff;
+				background: #e6e6ff;
 				border: 1px solid #e8e8ff;
 				border-radius: 0.25rem;
 				column-gap: 2rem;
 				display: grid;
-				grid-template-columns: repeat(auto-fit, min(90vw, 10rem));
+				grid-template-columns: repeat(auto-fit, min(90vw, 15rem));
 				justify-content: center;
 				margin: 1.5rem auto 0;
 				min-height: 30rem;
-				padding: 2rem;
+				padding: 4rem;
 				row-gap: 4rem;
-				width: min(calc(2px + 38rem), 90vw);
+				width: 60vw;
 			}
 
 			.cat {
 				display: flex;
 				flex-direction: column;
 				font-size: 0.875rem;
+				box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
 			}
 
 			.cat img {
 				width: 100%;
-			}
-
-			.cat figcaption {
-				font-size: 0.625rem;
-				font-style: italic;
 			}
 
 			.cat h2 {
@@ -146,7 +142,6 @@
 			}
 
 			async function loadCats() {
-				// TODO load cats dynamically using serverless functions
 				const cats = await fetch("/.netlify/functions/load-cats").then((res) => res.json());
 				console.log(cats);
 
